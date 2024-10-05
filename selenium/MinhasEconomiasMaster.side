@@ -1,0 +1,53 @@
+{
+  "id": "81b3b279-a179-4e88-8071-6f836ba527c5",
+  "version": "2.0",
+  "name": "MinhasEconomias",
+  "url": "https://wwws.minhaseconomias.com.br",
+  "tests": [{
+    "id": "1f1a294c-37d2-4666-97d2-32d1a2cf816c",
+    "name": "01",
+    "commands": [{
+      "id": "4039127e-5adf-421b-bae4-6f5ac04fb2fd",
+      "comment": "",
+      "command": "open",
+      "target": "/principal.do",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0d68c56b-dcbb-40ae-823a-76b713d79699",
+      "comment": "",
+      "command": "click",
+      "target": "id=ext-gen236",
+      "targets": [
+        ["id=ext-gen236", "id"],
+        ["css=#ext-gen236", "css:finder"],
+        ["xpath=//button[@id='ext-gen236']", "xpath:attributes"],
+        ["xpath=//table[@id='ext-comp-1012']/tbody/tr[2]/td[2]/em/button", "xpath:idRelative"],
+        ["xpath=//td[4]/table/tbody/tr[2]/td[2]/em/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Transações')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "11ba741c-6429-4eeb-b48e-aa27845b6e0b",
+      "comment": "",
+      "command": "waitForElementVisible",
+      "target": "css=.renderDescricao",
+      "targets": [
+        ["css=.x-list-over .descricao", "css:finder"],
+        ["xpath=//div[@id='ext-gen997']/div[2]/dl/dt[2]/em/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/dl/dt[2]/em/div", "xpath:position"]
+      ],
+      "value": "60000"
+    },<REPLACE_CONTENT_HERE>]
+  }],
+  "suites": [{
+    "id": "3ef652d3-d913-425b-8d37-e9b3aee155f8",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["https://wwws.minhaseconomias.com.br/"],
+  "plugins": []
+}
