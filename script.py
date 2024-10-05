@@ -16,17 +16,49 @@ selenium_file = "MinhasEconomiasNew.side"
 os.makedirs(output_folder, exist_ok=True)
 
 # Function to get the current timestamp in yyyymmddhhmmss format
+
+
 def get_timestamp():
     return datetime.now().strftime("%Y%m%d%H%M%S")
 
 # Function to convert MM/DD/YYYY to DD/MM/YYYY
+
+
 def convert_date_format(date_str):
     month, day, year = date_str.split('/')
     return f"{day}/{month}/{year}"
 
 # Function to generate a unique ID
+
+
 def generate_unique_id():
     return str(uuid.uuid4())
+
+
+def add_item(date, description, value, value_float):
+    data_list = []
+
+    # Append the processed data to a list with the unique ID
+    data_list.append(add_to_json('type', 'id=ext-comp-1814', date))
+    data_list.append(add_to_json('type', 'id=ext-comp-1816', description))
+    data_list.append(add_to_json('pause', '1000', ''))
+    
+    if value_float < 0:
+        # type expenses
+        data_list.append(add_to_json('click', 'id=ext-comp-1884', ''))
+    else:
+        # type income
+        data_list.append(add_to_json('click','id=ext-comp-1886',''))
+
+    data_list.append(add_to_json('type','id=ext-comp-1821','Can'))
+    data_list.append(add_to_json('type','id=ext-comp-1821','Canada'))
+    data_list.append(add_to_json('sendKeys','id=ext-comp-1821','${KEY_ENTER}'))
+    data_list.append(add_to_json('type','id=ext-comp-1825',value))
+    data_list.append(add_to_json('sendKeys','id=ext-comp-1825','${KEY_ENTER}'))
+    data_list.append(add_to_json('waitForElementVisible',"xpath=//*[contains(text(), 'adicionada com sucesso')]",'30000'))
+    data_list.append(add_to_json('waitForElementNotVisible',"xpath=//*[contains(text(), 'adicionada com sucesso')]",'80000'))
+
+    return data_list
 
 def add_to_json(command, target, value):
     # Generate unique ID
@@ -60,32 +92,35 @@ def process_pc_bank(file_name):
             # Convert date format
             date = convert_date_format(row['Date'])
             
-            # Clean up the value, remove commas and periods
+            # Replace periods by commas
             value = row['Amount'].replace('.', ',')
             value_float = float(row['Amount'])
             
             # Description
             description = row['Description']
+
+            data_list = data_list + add_item(date, description, value, value_float)
+            # data_list.append(add_item(date, description, value, value_float))
             
-            # Append the processed data to a list with the unique ID
-            data_list.append(add_to_json('type','id=ext-comp-1814',date))
-            data_list.append(add_to_json('type','id=ext-comp-1816',description))
-            data_list.append(add_to_json('pause','1000',''))
+            # # Append the processed data to a list with the unique ID
+            # data_list.append(add_to_json('type','id=ext-comp-1814',date))
+            # data_list.append(add_to_json('type','id=ext-comp-1816',description))
+            # data_list.append(add_to_json('pause','1000',''))
 
-            if value_float < 0:
-                # type expenses     
-                data_list.append(add_to_json('click','id=ext-comp-1884',''))
-            else:
-                # type income
-                data_list.append(add_to_json('click','id=ext-comp-1886','Can'))
+            # if value_float < 0:
+            #     # type expenses     
+            #     data_list.append(add_to_json('click','id=ext-comp-1884',''))
+            # else:
+            #     # type income
+            #     data_list.append(add_to_json('click','id=ext-comp-1886','Can'))
 
-            data_list.append(add_to_json('type','id=ext-comp-1821','Can'))
-            data_list.append(add_to_json('type','id=ext-comp-1821','Canada'))
-            data_list.append(add_to_json('sendKeys','id=ext-comp-1821','${KEY_ENTER}'))
-            data_list.append(add_to_json('type','id=ext-comp-1825',value))
-            data_list.append(add_to_json('sendKeys','id=ext-comp-1825','${KEY_ENTER}'))
-            data_list.append(add_to_json('waitForElementVisible',"xpath=//*[contains(text(), 'adicionada com sucesso')]",'30000'))
-            data_list.append(add_to_json('waitForElementNotVisible',"xpath=//*[contains(text(), 'adicionada com sucesso')]",'80000'))
+            # data_list.append(add_to_json('type','id=ext-comp-1821','Can'))
+            # data_list.append(add_to_json('type','id=ext-comp-1821','Canada'))
+            # data_list.append(add_to_json('sendKeys','id=ext-comp-1821','${KEY_ENTER}'))
+            # data_list.append(add_to_json('type','id=ext-comp-1825',value))
+            # data_list.append(add_to_json('sendKeys','id=ext-comp-1825','${KEY_ENTER}'))
+            # data_list.append(add_to_json('waitForElementVisible',"xpath=//*[contains(text(), 'adicionada com sucesso')]",'30000'))
+            # data_list.append(add_to_json('waitForElementNotVisible',"xpath=//*[contains(text(), 'adicionada com sucesso')]",'80000'))
             
     # Serializing json
     # json_object = json.dumps(data_list, indent=4)
