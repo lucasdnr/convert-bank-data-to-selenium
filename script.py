@@ -22,8 +22,13 @@ def get_timestamp():
 # Function to convert MM/DD/YYYY to DD/MM/YYYY
 
 
-def convert_date_format(date_str):
+def convert_date_format_pc(date_str):
     month, day, year = date_str.split('/')
+    return f"{day}/{month}/{year}"
+
+# Function to convert YYYY-MM-DD to DD/MM/YYYY
+def convert_date_format_cibc(date_str):
+    year, month, day = date_str.split('-')
     return f"{day}/{month}/{year}"
 
 # Function to generate a unique ID
@@ -121,7 +126,7 @@ def process_pc_bank(file_name):
         
         for row in csv_reader:
             # Convert date format
-            date = convert_date_format(row['Date'])
+            date = convert_date_format_pc(row['Date'])
             
             # Replace periods by commas
             value = row['Amount'].replace('.', ',')
@@ -141,24 +146,76 @@ def process_pc_bank(file_name):
 
 # CIBC Bank function to process the CSV file
 def process_cibc_bank(file_name):
-    # Save the processed data as JSON to a TXT file
-    with open(output_file, mode='w', encoding='utf-8') as txt_file:
-        for entry in data_list:
-            json.dump(entry, txt_file)
-            txt_file.write('\n')
+    input_file = os.path.join(input_folder, file_name)
+    timestamp = get_timestamp()
+    output_file = os.path.join(output_folder, f"cibc_bank_output_{timestamp}.txt")
+
+    data_list = []
+    with open(input_file, mode='r', newline='', encoding='utf-8') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        
+        #Append Initial Action
+        data_list.append(add_to_json('click','css=#ext-comp-1193 .x-btn-mc',''))
+        
+        for row in csv_reader:
+            # Convert date format
+            date = convert_date_format_cibc(row['Date'])
+            
+            # Replace periods by commas
+            debit = row['Debit']
+            credit = row['Credit']
+            if debit:
+                value = debit.replace('.', ',')
+                # convert number to negative
+                value_float = -abs(float(row['Debit']))
+            else:
+                value = credit.replace('.', ',')
+                value_float = float(row['Credit'])
+            
+            # Description
+            description = row['Description']
+
+            # add item        
+            data_list = data_list + add_item(date, description, value, value_float)
+
+    # handler files
+    destination_file = handler_output_files(data_list, output_file)
 
     print(f"CIBC Bank data successfully processed and saved to {output_file}")
+    print(f"Selenium file successfully created to  {destination_file}")
 
 # RBC Bank function to process the CSV file
 def process_rbc_bank(file_name):
+    input_file = os.path.join(input_folder, file_name)
+    timestamp = get_timestamp()
+    output_file = os.path.join(output_folder, f"rbc_bank_output_{timestamp}.txt")
 
-    # Save the processed data as JSON to a TXT file
-    with open(output_file, mode='w', encoding='utf-8') as txt_file:
-        for entry in data_list:
-            json.dump(entry, txt_file)
-            txt_file.write('\n')
+    data_list = []
+    with open(input_file, mode='r', newline='', encoding='utf-8') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        
+        #Append Initial Action
+        data_list.append(add_to_json('click','css=#ext-comp-1193 .x-btn-mc',''))
+        
+        for row in csv_reader:
+            # Convert date format
+            date = convert_date_format_pc(row['Date'])
+            
+            # Replace periods by commas
+            value = row['Amount'].replace('.', ',')
+            value_float = float(row['Amount'])
+            
+            # Description
+            description = row['Description']
+
+            # add item        
+            data_list = data_list + add_item(date, description, value, value_float)
+
+    # handler files
+    destination_file = handler_output_files(data_list, output_file)
 
     print(f"RBC Bank data successfully processed and saved to {output_file}")
+    print(f"Selenium file successfully created to  {destination_file}")
 
 # Menu function to choose the bank
 def display_menu():
