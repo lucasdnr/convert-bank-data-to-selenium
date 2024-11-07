@@ -177,6 +177,8 @@ pyrightconfig.json
 
 # others
 /banks/*
+!/banks/cibc-example.csv
 /processed/*
+!/processed/output-example.txt
 /selenium/*
 !/selenium/MinhasEconomiasMaster.side

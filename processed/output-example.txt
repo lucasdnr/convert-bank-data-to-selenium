@@ -1,0 +1,3 @@
+{"id": "735f24b2-15cd-45bd-b079-2a43f9552746", "comment": "", "command": "click", "target": "css=#ext-comp-1193 .x-btn-mc", "targets": [], "value": ""},
+{"id": "7cd3906d-dba7-432f-ad22-c392ce4f8408", "comment": "", "command": "type", "target": "id=ext-comp-1814", "targets": [], "value": "17/09/2024"},
+{"id": "cb0517ce-d5a5-488f-a263-72250a695e2c", "comment": "", "command": "type", "target": "id=ext-comp-1816", "targets": [], "value": "PURDYS CHOCOLATIER NORTH YORK, ON"}
