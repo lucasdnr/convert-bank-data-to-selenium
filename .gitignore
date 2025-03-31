@@ -176,9 +176,9 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python
 
 # others
-/banks/*
-!/banks/cibc-example.csv
-/processed/*
-!/processed/output-example.txt
-/selenium/*
-!/selenium/MinhasEconomiasMaster.side
+/files/banks/*
+!/files/banks/cibc-example.csv
+/files/processed/*
+!/files/processed/output-example.txt
+/files/selenium/*
+!/files/selenium/MinhasEconomiasMaster.side

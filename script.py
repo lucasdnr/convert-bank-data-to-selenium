@@ -11,9 +11,9 @@ class BankProcessor(ABC):
     
     def __init__(self, bank_name: str):
         self.bank_name = bank_name
-        self.input_folder = "banks"
-        self.output_folder = "processed"
-        self.selenium_folder = "selenium"
+        self.input_folder = "files\\banks"
+        self.output_folder = "files\\processed"
+        self.selenium_folder = "files\\selenium"
         self.placeholder = "<REPLACE_CONTENT_HERE>"
         self.master_file = "MinhasEconomiasMaster.side"
         self.selenium_file = "MinhasEconomiasNew.side"
