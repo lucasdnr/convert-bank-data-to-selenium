@@ -14,12 +14,15 @@ This Python program reads CSV bank files from different banks (PC Bank, CIBC Ban
 
 ```
 .
-├── banks/                     # Folder containing the input CSV files from the banks.
-├── processed/                 # Folder for the intermediate output files generated.
-├── selenium/                  # Folder containing the Selenium script template and output.
-│   ├── MinhasEconomiasMaster.side   # Selenium master file with a placeholder for the transactions.
-│   ├── MinhasEconomiasNew.side      # Selenium script generated after processing the CSV data.
-├── script.py          # Main Python script for processing and generating Selenium scripts.
+├── config/
+├── files/ 
+|   ├── banks/          # CSV files exported from the banks.
+|   ├── processed/      # Intermediate output files generated.
+|   ├── selenium/       # Selenium script template and output.
+│       ├── MinhasEconomiasMaster.side   # Selenium master file with a placeholder for the transactions.
+│       ├── MinhasEconomiasNew.side      # Selenium script generated after processing the CSV data.
+├── src/
+├── main.py          # Main Python script.
 ```
 
 ## How It Works
@@ -27,7 +30,7 @@ This Python program reads CSV bank files from different banks (PC Bank, CIBC Ban
 1. **User input**: The user selects which bank's CSV file to process via the command-line interface.
 2. **Data parsing**: The script reads the CSV file, processes the date formats, transaction descriptions, and values.
 3. **Selenium script generation**: The transaction data is formatted into Selenium commands, and the placeholders in the master Selenium file are replaced with the actual data.
-4. **Selenium execution**: The generated Selenium `.side` file can then be used with the Selenium IDE to automatically input the transactions into MinhasEconomias.
+4. **Selenium execution**: The generated Selenium `.side` file can then be used with the Selenium IDE to automatically input the transactions into MinhasEconomias website.
 
 ## Prerequisites
 
@@ -66,8 +69,8 @@ This Python program reads CSV bank files from different banks (PC Bank, CIBC Ban
    ```
 
 4. **Check output**:
-   - The processed transaction data will be saved in the `processed/` folder.
-   - The final Selenium `.side` script will be saved in the `selenium/` folder.
+   - The processed transaction data will be saved in the `files/processed/` folder.
+   - The final Selenium `.side` script will be saved in the `files/selenium/` folder.
 
 5. **Run the Selenium script**:
    - Open Selenium IDE in your browser.
@@ -77,9 +80,9 @@ This Python program reads CSV bank files from different banks (PC Bank, CIBC Ban
 ## Extending the Program
 
 To add support for another bank:
-1. Create a new function similar to `process_pc_bank` for the new bank's CSV format.
+1. Create a new class at `src/bank_processors.py` file similar to `RBCBankProcessor`, extending the `BankProcessor` interface and implementing the required methods.
 2. Implement date format conversion if necessary.
-3. Add the function to the menu in the `main()` function.
+3. Add the function to the menu in the `main()` function (`main.py`).
 
 ## Contributing
 
