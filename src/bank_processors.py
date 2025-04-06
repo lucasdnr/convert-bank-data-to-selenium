@@ -60,13 +60,18 @@ class RBCBankProcessor(BankProcessor):
     def convert_date_format(self, date_str: str) -> str:
         """Convert MM/DD/YYYY to DD/MM/YYYY."""
         month, day, year = date_str.split('/')
+
+        # Pad single digit day and month with leading zero
+        day = day.zfill(2)
+        month = month.zfill(2)
+
         return f"{day}/{month}/{year}"
     
     def process_row(self, row: Dict[str, str]) -> Tuple[str, str, str, float]:
         """Process a row from RBC Bank statement."""
-        date = self.convert_date_format(row['Date'])
-        value = row['Amount'].replace('.', ',')
-        value_float = float(row['Amount'])
-        description = row['Description']
+        date = self.convert_date_format(row['Transaction Date'])
+        value = row['CAD$'].replace('.', ',')
+        value_float = float(row['CAD$'])
+        description = row['Description 1']
         
         return date, description, value, value_float
