@@ -182,3 +182,4 @@ pyrightconfig.json
 !/files/processed/output-example.txt
 /files/selenium/*
 !/files/selenium/MinhasEconomiasMaster.side
+last-exporting.txt
